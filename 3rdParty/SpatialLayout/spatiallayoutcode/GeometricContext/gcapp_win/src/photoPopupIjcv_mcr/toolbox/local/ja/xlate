@@ -1,0 +1,48 @@
+% Needed by initprefs.m, although these messages exist in toolbox/simulink/simulink/prefspanel.m
+% "Simlink" for the first level of the preferences tree
+% "Fonts" and "Simulation" for the second level of the preferences tree
+<(prefspanel)Simulink.Fonts
+>(prefspanel)Simulink.フォント
+<(prefspanel)Simulink.Simulation
+>(prefspanel)Simulink.シミュレーション
+<(reporterrorlogs)MATLAB Error Log Reporter
+>(reporterrorlogs)MATLAB エラーログレポート
+<(reporterrorlogs)MATLAB has detected an error log from a previous session.\n
+>(reporterrorlogs)MATLAB は前のセッションからのエラーログを検出しました。\n
+<(reporterrorlogs)You can send the error log containing problem details to The MathWorks.  Our development\nteam uses the information to analyze and fix the problem.  We might contact you with\ninformation about workarounds or fixes.
+>(reporterrorlogs)MathWorks に問題の詳細を含むエラーログを送ることができます。 開発チームは、問題を解析し、\n修正するためにその情報を使用します。 回避方法、または修正についての情報を連絡する場合があります。
+<(reporterrorlogs)Send Report
+>(reporterrorlogs)レポート送信
+<(reporterrorlogs)Do Not Send
+>(reporterrorlogs)今は送信しない
+<(reporterrorlogs)Never Send
+>(reporterrorlogs)送信しない
+<(reporterrorlogs)View Logs...
+>(reporterrorlogs)ログ表示
+<[reporterrorlogs](reporterrorlogs)Help
+>(reporterrorlogs)ヘルプ
+<(reporterrorlogs)Error logs successfully sent to The MathWorks.
+>(reporterrorlogs)エラーログを MathWorks に送信しました。
+<(reporterrorlogs)MATLAB could not connect to the e-mail server.  Please correct your e-mail\ninformation below so that MATLAB can send your error logs to The MathWorks.\n\nIf you do not want to send the error logs, click Cancel.\n\nE-mail address\n(Example: someone@mycompany.com)
+>(reporterrorlogs)MATLAB は e-mail サーバに接続できませんでした。 MATLAB がエラーログを\nMathWorks に送信できるように、以下の e-mail 情報を修正してください。\n\nエラーログを送信したくない場合は、"キャンセル" をクリックしてください。\n\nE-mail アドレス\n(例: someone@mycompany.com)
+<(reporterrorlogs)SMTP server\n(Example: mail.mycompany.com)
+>(reporterrorlogs)SMTP サーバ\n(例: mail.mycompany.com)
+<(reporterrorlogs)E-mail Information
+>(reporterrorlogs)E-mail 情報
+<(inputdlgerrorlog)NumLines size is incorrect.
+>(inputdlgerrorlog)NumLines サイズが正しくありません。
+<(inputdlgerrorlog)Default Answer must be a cell array of strings.
+>(inputdlgerrorlog)デフォルトの Answer は文字列のセル配列でなければなりません。
+<(inputdlgerrorlog)Default Answer must be a cell array of strings.
+>(inputdlgerrorlog)デフォルトの Answer は文字列のセル配列でなければなりません。
+<[reporterrorlogs](inputdlgerrorlog)Cancel
+>(inputdlgerrorlog)キャンセル
+<(questdlgerrorlog)Too few arguments for questdlgsegv
+>(questdlgerrorlog)questdlgsegv への引数が少なすぎます
+<(questdlgerrorlog)Wrong number of output arguments for questdlgsegv
+>(questdlgerrorlog)questdlgsegv に対する出力引数の数に誤りがあります
+<(questdlgerrorlog)Default string does not match any button string name.
+>(questdlgerrorlog)デフォルトの文字列はどのボタンの文字列の名前とも一致しません
+
+% Copyright 2001-2006 The MathWorks, Inc.
+% $Revision: 1.2.4.3 $ $Date: 2006/10/14 12:23:13 $

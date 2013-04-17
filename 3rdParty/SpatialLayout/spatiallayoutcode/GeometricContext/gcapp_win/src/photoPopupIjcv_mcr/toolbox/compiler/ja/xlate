@@ -1,0 +1,229 @@
+% Copyright 2003-2005 The MathWorks, Inc.
+% $Revision: 1.1.6.10 $ $Date: 2006/06/29 16:08:52 $
+<(mxltool.GUIbutton)Build
+>(mxltool.GUIbutton)ビルド(B)
+<(mxltool.GUIbutton)Clear
+>(mxltool.GUIbutton)クリアー
+<(mxltool.GUIbutton)Remove
+>(mxltool.GUIbutton)除去
+<(mxltool.GUIbutton)Edit
+>(mxltool.GUIbutton)編集
+<(mxltool.GUIbutton)Add File
+>(mxltool.GUIbutton)ファイル追加
+<(mxltool.GUItext)Project Files
+>(mxltool.GUItext)プロジェクトファイル
+<(mxltool.GUItext)Build Status
+>(mxltool.GUItext)ビルド状況
+<(mxltool.menubar)File
+>(mxltool.menubar)ファイル(F)
+<(mxltool.menubar)Project
+>(mxltool.menubar)プロジェクト(P)
+<(mxltool.menubar)Component
+>(mxltool.menubar)コンポーネント(C)
+<(mxltool.menubar)Help
+>(mxltool.menubar)ヘルプ(H)
+% Source Code: addmenuitem(ui.FileMenu,xlate('New Project...'),{@newproject,f},'N');
+<(mxltool.Filemenu)New Project...
+>(mxltool.Filemenu)新規プロジェクト(N)...
+<(mxltool.Filemenu)Open Project...
+>(mxltool.Filemenu)プロジェクトを開く(O)...
+<(mxltool.Filemenu)Save Project...
+>(mxltool.Filemenu)プロジェクトを保存(S)...
+<(mxltool.Filemenu)Save As Project...
+>(mxltool.Filemenu)プロジェクトを別名で保存(A)...
+<(mxltool.Filemenu)Close Project
+>(mxltool.Filemenu)プロジェクトを閉じる(C)
+<(mxltool.Filemenu)Close MXLTOOL
+>(mxltool.Filemenu)MXLTOOLを終了(L)
+<(mxltool.Projectmenu)Add File...
+>(mxltool.Projectmenu)ファイル追加(A)...
+<(mxltool.Projectmenu)Edit File...
+>(mxltool.Projectmenu)ファイル編集(E)...
+<(mxltool.Projectmenu)Remove File
+>(mxltool.Projectmenu)ファイル削除(R)...
+<(mxltool.Projectmenu)Settings...
+>(mxltool.Projectmenu)設定(S)...
+<(mxltool.Buildmenu)Excel/COM Files
+>(mxltool.Buildmenu)Excel/COMファイル
+<(mxltool.Buildmenu)Clear Status
+>(mxltool.Buildmenu)ステータス消去(S)
+<(mxltool.Buildmenu)Open Build Log
+>(mxltool.Buildmenu)ビルドのログを開く(O)
+<(mxltool.Componentmenu)Package Component
+>(mxltool.Componentmenu)コンポーネントをパッケージする(P)
+<(mxltool.Componentmenu)Component Info...
+>(mxltool.Componentmenu)コンポーネント情報(C)...
+<(mxltool.Helpmenu)MXLTOOL Help
+>(mxltool.Helpmenu)MXLTOOLヘルプ
+<(mxltool.ProjectSettingdialog)Project settings
+>(mxltool.ProjectSettingdialog)プロジェクト設定
+<(mxltool.ProjectSettingdialog)Project naming
+>(mxltool.ProjectSettingdialog)プロジェクト名
+<(mxltool.ProjectSettingdialog)Component name
+>(mxltool.ProjectSettingdialog)コンポーネント名
+<(mxltool.ProjectSettingdialog)Class name
+>(mxltool.ProjectSettingdialog)クラス名
+<(mxltool.ProjectSettingdialog)Project version
+>(mxltool.ProjectSettingdialog)プロジェクトバージョン
+<(mxltool.ProjectSettingdialog)Project directory
+>(mxltool.ProjectSettingdialog)プロジェクトディレクトリ
+<(mxltool.ProjectSettingdialog)Compile code in
+>(mxltool.ProjectSettingdialog)コンパイラー言語
+<(mxltool.ProjectSettingdialog)Compiler options
+>(mxltool.ProjectSettingdialog)コンパイラーオプション
+<(mxltool.ProjectSettingdialog)Use Handle Graphics library
+>(mxltool.ProjectSettingdialog)Handle Graphicsライブラリを使用
+<(mxltool.ProjectSettingdialog)Build debug version
+>(mxltool.ProjectSettingdialog)デバッグバージョンをビルド
+<(mxltool.ProjectSettingdialog)Cancel
+>(mxltool.ProjectSettingdialog)キャンセル
+<(mxltool.error)Please enter a project component name.
+>(mxltool.error)コンポーネント名を記入してください
+<(mxltool.error)Please enter a class name.
+>(mxltool.error)クラス名を記入してください
+<(mxltool.error)Please enter a project version, e.g. 1.0
+>(mxltool.error)プロジェクトバージョンを記入してください（例えば1.0）
+<(mxltool.error)Please enter a project directory.
+>(mxltool.error)プロジェクトディレクトリを記入してください
+<(mxltool.dialog)Yes
+>(mxltool.dialog)はい
+<(mxltool.dialog)No
+>(mxltool.dialog)いいえ
+<(mxltool.dialog)Current project has not been saved.   Do you wish to save it?
+>(mxltool.dialog)プロジェクトは保存されていません。　保存しますか？
+<(mxltool.dialog)Unsaved project...
+>(mxltool.dialog)未保存のプロジェクト...
+<(mxltool.dialog)Open project...
+>(mxltool.dialog)プロジェクトを開く...
+<(mxltool.dialog)Save project as...
+>(mxltool.dialog)プロジェクトを別名で保存...
+<(mxltool.dialog)New Project Settings
+>(mxltool.dialog)新規プロジェクトの設定
+<(mxltool.dialog)Project Settings
+>(mxltool.dialog)プロジェクト設定
+<(mxltool)M-files
+>(mxltool)M-ファイル
+<(mxltool)MEX-files
+>(mxltool)MEX-ファイル
+<(mxltool)Browse...
+>(mxltool)参照...
+<(mxltool)Show verbose output
+>(mxltool)細かい情報を表示
+<(mxltool)%s does not exist.  Create it?
+>(mxltool)%sは存在しません。作成しますか？
+<(mxltool)Created zip file list and creating zip file
+>(mxltool)zipファイルリストを作成し、zipファイルを作成してます
+<(mxltool)Done.
+>(mxltool)完成。
+<(mxltool)Close
+>(mxltool)閉じる
+<(mxltool)Add file to project
+>(mxltool)フロジックトにファイルを追加
+<(cmptool)Close CMPTOOL
+>(cmptool)CMPTOOLを閉じる(L)
+<(cmptool)Add >>
+>(cmptool)追加 >>
+<(cmptool)Classes
+>(cmptool)クラス
+<(cmptool)CMPTOOL Help
+>(cmptool)CMPTOOLヘルプ
+<(cmptool)Standalone EXE
+>(cmptool)スタンドアローン EXE
+<(cmptool)MEX Function
+>(cmptool)MEX 関数
+<(cmptool)COM Object
+>(cmptool)COM オブジェクト(C)
+<(cmptool)Excel/COM Object
+>(cmptool)Excel/COM オブジェクト(E)
+<(cmptool)Java Object
+>(cmptool)Java オブジェクト(J)
+<(cmptool)JNI Object
+>(cmptool)JNI オブジェクト(J)
+<(cmptool).NET Object
+>(cmptool).NET オブジェクト(N)
+<(cmptool)Package Files
+>(cmptool)パッケージファイル
+<(cmptool)Include MCR
+>(cmptool)MCRを含む
+<(cmptool)Add file to package
+>(cmptool)ファイル パッケージ
+<(cmptool)Create...
+>(cmptool)作成...
+<(cmptool)No information found for component: %s 
+>(cmptool)コンポーネント %s の情報が見つかりません
+<(cmptool)Please select a Class before adding a file.
+>(cmptool)ファイルを追加する前にクラスを選択してください
+<(cmptool)Please add at least one class name.
+>(cmptool)クラス名を少なくとも一つ入力してください
+%
+% updates for sp3
+<(cmptool)Create a singleton MCR
+>(cmptool)単独の MCR を作成
+<(cmptool)MATLAB Builder for COM
+>(cmptool)MATLAB Builder for COM
+% addmenuitem(ui.MainComItem,xlate('MATLAB Builder for COM Help'),{@helpcom},'C');
+% please add (C) for translation
+<(cmptool)MATLAB Builder for COM Help
+>(cmptool)MATLAB Builder for COM ヘルプ (C)
+% addmenuitem(ui.MainComItem,xlate('About MATLAB Builder for COM'),{@aboutcom},'A');
+% please add (A) for translation
+<(cmptool)About MATLAB Builder for COM
+>(cmptool)MATLAB Builder for COM について (A)
+<(cmptool)MATLAB Builder for Excel
+>(cmptool)MATLAB Builder for Excel
+% addmenuitem(ui.MainExcelItem,xlate('MATLAB Builder for Excel Help'),{@helpxl},'E');
+%% please add (E) for translation
+<(cmptool)MATLAB Builder for Excel Help
+>(cmptool)MATLAB Builder for Excel ヘルプ (E)
+<(cmptool)MATLAB Java Builder Help
+>(cmptool)MATLAB Java Builder ヘルプ (J)
+<(cmptool)MATLAB .NET Builder Help
+>(cmptool)MATLAB .NET Builder ヘルプ (N)
+<(cmptool)About MATLAB Java Builder
+>(cmptool)MATLAB Java Builder について (O)
+<(cmptool)About MATLAB .NET Builder
+>(cmptool)MATLAB .NET Builder について (U)
+%addmenuitem(ui.MainExcelItem,xlate('About MATLAB Builder for Excel'),{@aboutxl},'B');
+% please add (B) for translation
+<(cmptool)About MATLAB Builder for Excel
+>(cmptool)MATLAB Builder for Excel について (B)
+<(cmptool)MCR Location ...
+>(cmptool)MCR の位置
+<(cmptool)Please specify directory location of MCRInstaller.exe
+>(cmptool)MCRInstaller.exe のディレクトリ位置を選択してください。
+<(cmptool)Build error.
+>(cmptool)ビルドエラー。
+<(cmptool)No spaces or periods are allowed in a class name.
+>(cmptool)スペースやピリオドはクラス名で許可されていません。
+<(cmptool)No path selected or no class selected.
+>(cmptool)選択されたパスがないか、選択されたクラスがありません。
+<(cmptool)No spaces or periods are allowed in a component name.
+>(cmptool)スペースやピリオドはコンポーネント名で許可されていません。
+<(cmptool)A MATLAB Builder for Excel project cannot have more than one class. Did not save the project.
+>(cmptool)MATLAB Builder for Excel のプロジェクトは複数のクラスをもつことはできません。プロジェクトを保存できませんでした。
+<(cmptool)Incorrect Project Type
+>(cmptool)不正なプロジェクトタイプ
+<(cmptool)No build log for this project currently exists.
+>(cmptool)このプロジェクトに対するビルドログは現在存在しません。
+<(cmptool)Could not locate MATLAB Builder for Excel help files. One possible reason is that the documentation root is not set properly. Use the DOCROOT function to set the documentation root.
+>(cmptool)MATLAB Builder for Excel ヘルプファイルが見つかりません。 ドキュメンテーションのルートが適切に設定されていない可能性があります。 DOCROOT 関数を使ってドキュメンテーションのルートを設定してください。
+<(cmptool)Could not locate MATLAB Builder for COM help files. files. One possible reason is that the documentation root is not set properly. Use the DOCROOT function to set the documentation root.
+>(cmptool)MATLAB Builder for COM ヘルプファイルが見つかりません。 ドキュメンテーションのルートが適切に設定されていない可能性があります。 DOCROOT 関数を使ってドキュメンテーションのルートを設定してください。
+<(cmptool)Adding bin directory to zip if necessary...
+>(cmptool)必要であれば bin ディレクトリを zip に追加中...
+<(cmptool)Packaging component for distribution...
+>(cmptool)配布用のコンポーネントをパッキング中...
+
+<(deploytool)%s does not exist or is a directory.
+>(deploytool)%s は存在しないかディレクトリです。
+<(deploytool)Could not create a new project
+>(deploytool)新規プロジェクトを作成できません
+<(deploytool)Error opening %s.\nIf the project was created using COMTOOL, MXLTOOL, or DOTNETTOOL, \nuse BASICUI to open these projects.
+>(deploytool)%s を開くときにエラーが発生しました。\nCOMTOOL、MXLTOOL、または DOTNETTOOL を使用してプロジェクトが作成された場合、\nBASICUI を使用してそれらのプロジェクトを開いてください。
+<(deploytool)Error opening the deployment tool. Please restart MATLAB. \nIf the problem persists, please contact technical support \nby filling out the online support request form at \n<a href="http://www.mathworks.com/support/contact_us/index.html">http://www.mathworks.com/support/contact_us/index.html</a>. \nAttach the following information in the request\n\n============ BEGIN HERE ============\n %s\n============= END HERE =============\n
+>(deploytool)配布ツールを開くときにエラーが発生しました。\nMATLAB を再起動してください。 問題が解決しない場合、\n<a href="http://www.mathworks.com/support/contact_us/index.html"><a href="http://www.mathworks.com/support/contact_us/index.html">http://www.mathworks.com/support/contact_us/index.html</a></a>\nにあるオンラインサポートリクエストフォーマットに記入して技術サポートにご連絡ください。\nつぎの情報をリクエスト内に付加してください。\n\n============ 最初 ============\n %s\n============= 最後 =============\n
+<(deploytool)Invalid option '%s'
+>(deploytool)無効なオプション '%s'
+
+
+

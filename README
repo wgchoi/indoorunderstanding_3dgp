@@ -1,0 +1,38 @@
+Information
+===========
+
+Project webpage: http://www.eecs.umich.edu/vision/3DGP/
+
+This package is an implementation of the indoor scene understanding method described in 
+(W. Choi, Y. -W. Chao, C. Pantofaru and S. Savarese "Understanding Indoor Scenes using 3D Geometric Phrases", CVPR 2013). 
+
+For questions concerning the code please contact Wongun Choi at <wgchoi AT umich DOT edu>.
+
+The system is implemented in Matlab. 
+
+Basic Usage
+===========
+
+Currently, only testing part of the method is released. Training algorithm will be made available soon as well. 
+
+To test:
+--------
+
+The package include a script "demo_test.m" that replicates the results reported in our CVPR paper. The code does, 
+1. downloading dataset
+2. preprocessing images - object detection (Felzenszwalb et al, PAMI 2010), scene classification (Lazebnik et al, CVPR 2006) and indoor layout estimation (Hedau et al, ICCV 2009)
+3. running 3DGP model
+4. evaluation (detection, scene classification, layout estimation)
+5. visualization of examplar results
+
+
+How to Cite
+===========
+When citing our system, please cite our following CVPR 13 publication:
+
+@InProceedings{choi_cvpr13,
+  author       = "W. Choi and Y. -W. Chao and C. Pantofaru and S. Savarese",
+  title        = "Understanding Indoor Scenes Using 3D Geometric Phrases",
+  booktitle    = "CVPR",
+  year         = "2013",
+}

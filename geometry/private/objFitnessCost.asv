@@ -1,0 +1,33 @@
+function [cost] = objFitnessCost(location, camh, K, R, obj, model)
+assert(length(location) == 2);
+location(3) = -(camh - model.height(1) / 2);
+%%%%
+angle = get3DAngle(K, R, obj.pose, -camh);
+[cube] = get3DObjectCube(R, location, model.width(1), model.height(1), model.depth(1), angle);
+[ppoly, pbbox] = get2DCubeProjection(K, R, cube);
+
+%%%
+bbox = obj.bbs;
+
+bshow = 1;
+if bshow
+    clf
+    axis([-3000 3000 -3000 3000])
+    rectangle('position', bbox, 'edgecolor', 'r', 'linewidth', 2);
+    rectangle('position', pbbox, 'edgecolor', 'g', 'linewidth', 2);
+    grid on
+end
+bbox(1:2) = bbox(1:2) + bbox(3:4) / 2;
+pbbox(1:2) = pbbox(1:2) + pbbox(3:4) / 2;
+% cost = sum( ( bbox(1:2) - pbbox(1:2) ) .^ 2 );
+% cost = sum( ( bbox - pbbox ) .^ 2 );
+cost = sum( ( bbox(1:2) - pbbox(1:2) ) .^ 2 );
+cost = cost + sum( ( bbox(3:4) - pbbox(3:4) ) .^ 2 );
+
+if bshow
+    title(['fval : ' num2str(cost, '%.03f')]);
+    drawnow
+    pause(0.1);
+end
+
+end

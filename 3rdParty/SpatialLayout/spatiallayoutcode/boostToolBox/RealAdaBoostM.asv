@@ -1,0 +1,129 @@
+%   The algorithms implemented by Alexander Vezhnevets aka Vezhnick
+%   <a>href="mailto:vezhnick@gmail.com">vezhnick@gmail.com</a>
+%
+%   Copyright (C) 2005, Vezhnevets Alexander
+%   vezhnick@gmail.com
+%   
+%   This file is part of GML Matlab Toolbox
+%   For conditions of distribution and use, see the accompanying License.txt file.
+%
+%   RealAdaBoost Implements boosting process based on "Real AdaBoost"
+%   algorithm
+%~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+%
+%    [Learners, Weights, final_hyp] = RealAdaBoost(WeakLrn, Data, Labels,
+%    Max_Iter, OldW, OldLrn, final_hyp)
+%    ---------------------------------------------------------------------------------
+%    Arguments:
+%           WeakLrn   - weak learner
+%           Data      - training data. Should be DxN matrix, where D is the
+%                       dimensionality of data, and N is the number of
+%                       training samples.
+%           Labels    - training labels. Should be 1xN matrix, where N is
+%                       the number of training samples.
+%           Max_Iter  - number of iterations
+%           OldW      - weights of already built commitee (used for training 
+%                       of already built commitee)
+%           OldLrn    - learnenrs of already built commitee (used for training 
+%                       of already built commitee)
+%           final_hyp - output for training data of already built commitee 
+%                       (used to speed up training of already built commitee)
+%    Return:
+%           Learners  - cell array of constructed learners 
+%           Weights   - weights of learners
+%           final_hyp - output for training data
+
+function [Learners, Weights, final_hyp] = RealAdaBoostM(WeakLrn, Data, Labels, Max_Iter, NumClasses)
+
+if( nargin == 5)
+  Learners = {};
+  Weights = zeros(NumClasses,Max_Iter);
+%   distr = ones(1,size(Data,2));
+%   L1=find(Labels>0);
+%   distr(L1)=distr(L1)/(2*length(L1));
+%   L2=find(Labels<0);
+%   distr(L2)=distr(L2)/(2*length(L2));
+  distr = ones(NumClasses, size(Data,2));
+  for(i=1:NumClasses)
+      x=ones(1,size(Data,2));
+      L1=find(Labels==i);
+      x(L1)=x(L1)/(2*length(L1));
+      L1=find(Labels~=i);
+      x(L1)=x(L1)/(2*length(L1));
+      distr(i,:)=x;
+  end
+else
+  error('Function takes 5 arguments');
+end
+
+curlabels=zeros(size(Labels));
+
+for j=1:NumClasses+1
+  indices(j).i=find(Labels==j);
+  Z(j).z=-ones(1,size(Data,2));
+  Z(j).z(indices(j).i)=1;
+end
+
+
+AlphaIt=zeros(2^NumClasses-1,1);
+BetaIt=zeros(2^NumClasses-1,1);
+
+for It = 1 : Max_Iter
+    It
+    for j=1:NumClasses
+        distr(j,:)=distr(j,:)/sum(distr(j,:));
+    end
+    for n=1:2^NumClasses-1
+        binstr=dec2bin(n,NumClasses);
+        curindices=[];
+        for j=1:NumClasses
+          membership(j)=bin2dec(binstr(j));
+          curlabels(indices(j).i)=2*membership(j)-1;
+          curindices=[curindices indic
+        end
+        curlabels(indices(NumClasses+1).i)=-1;
+        distr2=sum(distr)/sum(sum(distr))*2;
+        stump(n).s = train2(WeakLrn, Data, curlabels, distr2);
+        step_out=calc_output(stump(n).s,Data);
+        step_out = 2*step_out-1;
+        epsIt=0;
+%         for j=1:NumClasses
+%             if(membership(j))
+%                 ej=(Z(j).z~=step_out&Z(j).z>0);
+%                 epsIt=epsIt+sum(ej.*distr(j,:));
+%             else
+%                 ej=(Z(j).z~=-step_out&Z(j).z>0);
+%                 epsIt=epsIt+sum(ej.*distr(j,:));
+%             end
+%         end
+        ej=(curlabels~=step_out);
+        epsIt=epsIt+sum(ej.*distr2);
+        BetaIt(n) = epsIt/(1-epsIt);
+        AlphaIt(n) = log(1 / BetaIt(n));
+        J(n)=0;
+%        for j=1:NumClasses
+%            if(membership(j))
+                err=(curlabels-AlphaIt(n)*step_out).^2;
+                J(n)=J(n)+sum(distr2.*err);
+%            end
+%        end
+    end
+    minindx=find(J==min(J));
+    minindx=minindx(1);
+    J
+    minindx
+    Learners{end+1}=stump(minindx).s;
+    binstr=dec2bin(minindx,NumClasses);
+    step_out=calc_output(stump(minindx).s,Data);
+    step_out=2*step_out-1;
+    for j=1:NumClasses
+        membership(j)=bin2dec(binstr(j));
+        if(membership(j))
+            Weights(j,It)=AlphaIt(n);
+            ej=(Z(j).z~=step_out);;
+            distr(j,:)=distr(j,:).*((BetaIt(n)*ones(size(ej))).^(ones(size(ej))-ej));
+        else
+            Weights(j,It)=0;
+        end
+    end   
+end

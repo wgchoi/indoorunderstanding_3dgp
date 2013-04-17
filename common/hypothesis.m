@@ -1,0 +1,2 @@
+function y = hypothesis()
+end

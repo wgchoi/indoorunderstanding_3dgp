@@ -1,0 +1,117 @@
+function [PixErr ConfMat flags]= perfeval_boxlayout(testind,savedir)
+% PERFEVAL_BOXLAYOUT Evaluate the perf
+%   of a boxlayout and pixel labels of different surfaces. Please refer to 
+%   the readme file provided with this software for detailed meaning of 
+%   these outputs.
+% 
+% USAGE: [ boxlayout,surface_labels ] = 
+%               getspatiallayout(imdir,imagename,workspcdir)
+%
+% INPUT: 
+%   imdir - direndory containing the original image to be processed. Use '/' 
+%       (not '\') to separate directories. 
+%   imagename - original image name
+%   workspcdir - directory to hold intermediate results. Internally, two
+%       independent directories are created inside this directory to hold
+%       visualizations and data files.
+%
+% OUTPUT:
+%   binlayout - structure containing the estimated approximation of the
+%       indoor scene as a 3D box, with the following fields -
+%   .polyg - cell array of size (n x 5), each containing coordinates of
+%       planar surfaces of the room (left, right, middle walls, and, floor 
+%       and ceiling). The (i,j)-th cell entry corresponds to i-th box
+%       layout hypothesis, and j-th plane of that hypothesis.
+%   .init - An array of size (n x 2). The i-th row (score,index) represents
+%       score and index of a hypothesis in the polyg cell array above, as
+%       estimated by our algorithm.
+%   .reestimated - An array of size (n x 2). The i-th row (score,index) represents
+%       score and index of a hypothesis in the polyg cell array above, as
+%       estimated by the second iteration of our algorithm.
+%   surface_labels - structure containing the per pixel likelihood of each of
+%       the surfaces, and objects, with following fields -
+%   .init - An array of size (m x 7), where m is th total number of
+%       superpixels detected in the image. The (i,j)-th entry represents
+%       the likelihood of the i-th superpixel being labeled as j-th
+%       surface.
+%
+% Copyright (c) Varsha Hedau, University of Illinois at Urbana Champaign,
+% 2011.
+% To use this code or any part of the package, for any purpose, you agree 
+% to abide by the restrictions set forth in the file Readme.txtmentioned in the lice
+
+PixErr=[];
+ConfMat=zeros(5,5);
+ConfMatnorm=zeros(1,5);
+%performance evaluation
+%pixel error
+
+imdir='../Images_resized/';
+imext='jpg';
+d=dir([ imdir '*.' imext]);
+
+imgind=testind;
+cnt=1;
+cnt2=1;
+flags=ones(numel(testind),1);
+for i=1:length(imgind)
+%     i
+    imagename=d(imgind(i)).name;
+    img=imread([imdir imagename]);
+    [h w kk]=size(img);
+    
+    filename=fullfile('../Results/',[imagename(1:end-4) '_spatiallayout.mat']);
+    if exist(filename)
+        load(filename);
+    else
+        fprintf(1,'No results for image %s\n',imagename);
+        flags(i)=0;
+        continue
+    end
+    
+    filename=fullfile('../GTParseLabels_resized/',[imagename(1:end-4) '_labels.mat']);
+    
+    fields=[]; labels=[];
+    if exist(filename)
+        load(filename);
+    else
+        flags(i)=0;
+        continue;
+    end
+    
+    ind=find(fields==0);
+    fields(ind)=6;
+    ind=find(labels==0);
+    labels(ind)=7;
+    
+    if numel(boxlayout.reestimated) >0
+       vv=boxlayout.reestimated(:,1);
+       ii=boxlayout.reestimated(:,2);
+       
+    end
+    
+    %get pixel err for the best
+    k=1;
+    Polyg{1}=boxlayout.polyg{ii(k),1};
+    Polyg{2}=boxlayout.polyg{ii(k),2};
+    Polyg{3}=boxlayout.polyg{ii(k),3};
+    Polyg{4}=boxlayout.polyg{ii(k),4};
+    Polyg{5}=boxlayout.polyg{ii(k),5};
+    [pixerr]=getPixerr(gtPolyg,Polyg);
+    [confmatnorm ,confusion_mat]=getConfusionMat(gtPolyg,Polyg);
+
+    
+    PixErr(i)=pixerr;
+    ConfMat=ConfMat+confusion_mat;
+    ConfMatnorm=ConfMatnorm+confmatnorm;
+    cnt=cnt+1;
+    
+end
+ConfMatnorm=repmat(ConfMatnorm(:),[1,5]);
+ConfMat=ConfMat./ConfMatnorm;
+totpixerr=sum(PixErr.*flags')/sum(flags);
+fprintf(1,'\nTOTAL PIXEL ERROR = %5.3f %%\n\n',totpixerr*100);
+fprintf(1,'CONFUSION MATRIX\n');
+ConfMat
+
+return;

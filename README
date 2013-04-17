@@ -10,6 +10,8 @@ For questions concerning the code please contact Wongun Choi at <wgchoi AT umich
 
 The system is implemented in Matlab. 
 
+The code is tested on Linux (Ubuntu 10.10) with a Matlab version R2011b. 
+
 Basic Usage
 ===========
 

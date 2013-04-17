@@ -5,21 +5,21 @@ addPaths;
 if(~exist('./dataset', 'dir'))
     mkdir('dataset');
     system('wget http://www.eecs.umich.edu/vision/data/cvpr13IndoorData.tar.gz');
-    system('mv cvpr13IndoorData.tar.gz ./dataset/; cd dataset/; tar xvf cvpr13IndoorData.tar.gz');
-    system('rm cvpr13IndoorData.tar.gz; cd ..');
+    system('mv cvpr13IndoorData.tar.gz ./dataset/; cd dataset/; tar xvf cvpr13IndoorData.tar.gz; rm cvpr13IndoorData.tar.gz; cd ..');
 end
 
 imgbase = './dataset/cvpr13data/images/';
 
 preprocess_dir = 'cache/test';
 if(~exist(preprocess_dir, 'dir'))
-    r = input('Download preprocessed data? (y/n)', 's');
+    r = input('Download preprocessed data? (y) or run all preprocessing? (n)', 's');
     if(r == 'y')
         mkdir('cache');
         system('wget http://www.eecs.umich.edu/vision/data/cvpr13IndoorPreprocessed.tar.gz'); 
-        system('mv cvpr13IndoorPreprocessed.tar.gz ./cache/; cd cache; tar xvf cvpr13IndoorPreprocessed.tar.gz');
-        system('rm cvpr13IndoorPreprocessed.tar.gz; cd ..');
+        system('mv cvpr13IndoorPreprocessed.tar.gz ./cache/; cd cache; tar xvf cvpr13IndoorPreprocessed.tar.gz; rm cvpr13IndoorPreprocessed.tar.gz; cd ..');
     else
+		disp('WARNING: preprocessing may take several hours to a day (depending on the computing power).')
+        disp('Please let it run, relax and check back later!');
         % preprocess data
         basedir = './dataset/cvpr13data/images/';
         annodir = './dataset/cvpr13data/annotations/';
@@ -33,19 +33,27 @@ if(~exist(preprocess_dir, 'dir'))
             [~, path] = strtok(testfiles{i}, '/');
             testfiles{i} = path(2:end);
         end
+		fprintf('running object detector... '); tic();
         preprocess_detector(basedir, 'cache/detections/', testfiles);
-        
+        toc();
+
         % layout estimator
+		fprintf('running layout estimator ... '); tic();
         curdir = pwd();
         cd 3rdParty/SpatialLayout/spatiallayoutcode/
         preprocess_layout(fullfile(curdir, basedir), fullfile(curdir, 'cache/layouts/'), testfiles, 'test');
         cd(curdir);
+        toc();
         
         % scene classifier
+		fprintf('running scene classifier ... '); tic();
         preprocess_sceneclass(basedir, 'cache/scene', 'test', testfiles);
+		toc();
         
-        % build dataset compatible to 3DGP code (estimate 3D model, collect all necessary info, etc)
+        % build data compatible to 3DGP code (estimate 3D model, collect all necessary info, etc)
+		fprintf('estimate 3D model + etc ... '); tic();
         preprocess_data(basedir, 'cache/', annodir, 'test', testfiles);
+		toc();
     end
 end
 %% load pre-processed data
@@ -172,6 +180,7 @@ for i = 1:length(om)-1
             'Location', 'SouthWest', 'fontsize', 20);
     drawnow
 end
+
 %% test and visualize
 datalist = 99;
 

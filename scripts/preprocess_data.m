@@ -24,7 +24,9 @@ mkdir(dirname);
 detbase = fullfile(resbase, 'detections');
 
 csize = 16;
-matlabpool open
+try
+    matlabpool open
+end
 for idx = 1:csize:length(files)
     setsize = min(length(files) - idx + 1, csize);
     

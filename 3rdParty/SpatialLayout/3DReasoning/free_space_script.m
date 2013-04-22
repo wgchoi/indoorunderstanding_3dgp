@@ -1,0 +1,102 @@
+%Sample script for free space estimation 
+%Copyright (C) 2010 Varsha Hedau, University of Illinois at Urbana Champaign.
+%See readme distributed with this code for terms of use.
+
+
+imdir='../Images_resized/';
+d=dir([imdir '*.jpg']);
+load ../traintestind.mat;
+load ../Allvpdata.mat
+load ../imsegs.mat
+imgnum=200;%256;%103%244 %one of the testind 
+
+
+clear polyg Polyg Xc Yc Zc Xc_dummy Yc_dummy Zc_dummy Xc_dummy_floor Yc_dummy_floor Zc_dummy_floor;
+clear DistfromSurface pts_dummy;
+
+%     imgnum=36;
+imagename=d(imgnum).name;
+img=imread([imdir imagename]);
+[h w imk]=size(img);
+
+filename=fullfile('../Boxlayouts/',[imagename(1:end-4) '_layres.mat']);
+if exist(filename)
+    load(filename);
+else
+    continue;
+end
+
+
+% Get camera parameters
+camera_ht = 4.5;dc=-1*camera_ht;
+[K R]=calibrate_cam(Allvpdata(imgnum).vp,h,w);
+
+%   Get Layout  and box corners in 3D
+vv=lay_scores(:,1);
+ii=lay_scores(:,2);
+
+layoutid=ii(1);
+for fie=1:5
+    Polyg{fie}=[];
+    if size(polyg{layoutid,fie})>0
+        Polyg{fie}=polyg{layoutid,fie};
+    end
+end
+
+
+ShowGTPolyg(img,Polyg,101);
+%close all
+
+%   Warp texture in 3D %% Get 3D cam coord points for all pixels
+[room_ht room_wt SurfaceNormals DistfromSurface DistOn visplanes corners3D K R]=getWallCorners(Polyg,Allvpdata(imgnum).vp,h,w,K,R);
+[pts_c]=warpimg3D(img,h,w,DistfromSurface,SurfaceNormals,visplanes,Polyg,R,K,102);
+
+% Create grid voxels
+clear pts_c2 pts_c1;
+[Xc Yc Zc Xc_floor Yc_floor Zc_floor Xc_dummy Yc_dummy...
+    Zc_dummy]=createVoxelgrid(pts_c,Polyg,R,K,h,w,camera_ht);
+
+%  Get obj confidences
+filename=fullfile('../LabelConfidences/',[imagename(1:end-4) '_lc_st2.mat' ]);
+load(filename);
+
+pg={avg_pg};
+cimages = msPg2confidenceImages(imsegs(imgnum),pg);
+objconf=cimages{1}(:,:,6);
+objmask=objconf>0.6;
+%         imwrite(im2double(img).*repmat(objmask,[1 1 3]),[savedir imagename(1:end-4) '_objmask.png' ]);
+figure(103);imshow(objmask);
+
+% Free space estimation
+temp1 = K * [Xc(:)';Yc(:)';Zc(:)'];
+img_x = reshape(temp1(1,:)./temp1(3,:),size(Xc));
+img_y = reshape(temp1(2,:)./temp1(3,:),size(Yc));
+inds = find(img_x(:)>=1 & img_y(:)>=1 & img_x(:)<=w & img_y(:)<=h);
+img_inds = sub2ind(size(img),round(img_y(inds)),round(img_x(inds)));
+obj_cone = zeros(size(Xc));
+obj_cone(inds) = objmask(img_inds);
+inds = find(obj_cone);
+inds1=inds;
+
+%take projection on floor plane
+
+temp2 = K * [Xc_floor';Yc_floor';Zc_floor'];
+img_x = reshape(temp2(1,:)./temp2(3,:),size(Xc_floor));
+img_y = reshape(temp2(2,:)./temp2(3,:),size(Yc_floor));
+inds = find(img_x(:)>=1 & img_y(:)>=1 & img_x(:)<=w & img_y(:)<=h);
+img_inds = sub2ind(size(img),round(img_y(inds)),round(img_x(inds)));
+obj_cone = zeros(size(Xc_floor));
+obj_cone(inds) = objmask(img_inds);
+inds = find(obj_cone);
+inds2=inds;
+
+occupied_inds=intersect(inds1,inds2);
+drawVoxels(Xc_dummy,Yc_dummy,Zc_dummy,occupied_inds,102);
+
+%
+% saveas(gcf,[savedir imagename(1:end-4) '_freespace.fig']);
+% close all
+
+
+
+

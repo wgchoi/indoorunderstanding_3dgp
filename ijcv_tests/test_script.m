@@ -91,9 +91,13 @@ csize = 32;
 
 addVarshaPaths
 
-layoutsets = load_layout_data('sp10_estvp');
+layoutsets = load_layout_data('sp20_hedau');
+% layoutsets = load_layout_data('sp10_estvp');
+% layoutsets = load_layout_data('sp20_estvp');
+% layoutsets = load_layout_data('sp10_gtvp');
+% layoutsets = load_layout_data('sp20_gtvp');
 
-% matlabpool open 2;
+matlabpool open;
 for idx = 1:csize:length(datafiles)
     setsize = min(length(datafiles) - idx + 1, csize);
     fprintf(['processing ' num2str(idx) ' - ' num2str(idx + setsize)]);
@@ -113,8 +117,7 @@ for idx = 1:csize:length(datafiles)
     tconf3 = cell(1, setsize);
     
     terroridx = false(1, setsize);
-%     par
-    for i = 1:setsize
+    parfor i = 1:setsize
         pg0 = parsegraph(); 
 
         pg0.layoutidx = 1; % initialization
@@ -152,7 +155,7 @@ for idx = 1:csize:length(datafiles)
     end
     fprintf(' => done\n')
 end
-% matlabpool close
+matlabpool close
 %% draw detection evaluation curves
 om = objmodels();
 for i = 1:length(om)-1
@@ -188,7 +191,11 @@ for i = 1:length(om)-1
             'Location', 'SouthWest', 'fontsize', 20);
     drawnow
 end
-
+save orgresult20
+% save ijcv_reestimate10
+% save ijcv_reestimate20
+% save ijcv_gt10
+% save ijcv_gt20
 %% test and visualize
 datalist = 99;
 

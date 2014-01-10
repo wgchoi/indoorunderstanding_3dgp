@@ -1,6 +1,6 @@
 function [data] = replace_layout(data, models, layoutsets)
 
-for i = 1:length(data)
+parfor i = 1:length(data)
     data(i) = replace_layout1(data(i), models, layoutsets);
 end
 
@@ -13,7 +13,7 @@ function data = replace_layout1(data, models, layoutsets)
 
 [id1, id2] = find_layout_idx(layoutsets, roomtype, filename);
 
-data = assign_layout(data, layoutsets(id1).vpdata{id2}, layoutsets(id1).boxlayout{id2});
+data = assign_layout(data, layoutsets{id1}.vpdata{id2}, layoutsets{id1}.boxlayout{id2});
 
 % re-estimate 3D information of each detection.
 [hobjs, invalid_idx] = generate_object_hypotheses(data.x.imfile, data.x.K, data.x.R, data.x.yaw, objmodels(), data.x.dets);
@@ -85,17 +85,17 @@ end
 
 function [id1, id2] = find_layout_idx(layoutsets, roomtype, filename)
 
-if(strcmp(roomtype, layoutsets(1).name))
+if(strcmp(roomtype, layoutsets{1}.name))
     id1 = 1;
-elseif(strcmp(roomtype, layoutsets(2).name))
+elseif(strcmp(roomtype, layoutsets{2}.name))
     id1 = 2;
-elseif(strcmp(roomtype, layoutsets(3).name))
+elseif(strcmp(roomtype, layoutsets{3}.name))
     id1 = 3;
 end
 
 id2 = -1;
-for i = 1:length(layoutsets(id1).fnames)
-    [~, fname] = fileparts(layoutsets(id1).fnames{i});
+for i = 1:length(layoutsets{id1}.fnames)
+    [~, fname] = fileparts(layoutsets{id1}.fnames{i});
     if(strcmp(filename, fname))
         id2 = i;
     end

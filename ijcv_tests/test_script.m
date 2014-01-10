@@ -196,32 +196,5 @@ save orgresult20
 % save ijcv_reestimate20
 % save ijcv_gt10
 % save ijcv_gt20
-%% test and visualize
-datalist = 99;
 
-params = params2;
-params.objconftype = 'odd'; % M1 in the paper
-
-pg0 = parsegraph(); 
-pg0.layoutidx = 1; % initialization
-pg0.scenetype = 1;
-
-for dataidx = datalist
-    data = load(fullfile(preprocess_dir, datafiles(dataidx).name));
-    % necessary if downloaded the preprocessed data     
-    if(~exist(data.x.imfile, 'file'))
-        [~, fname] = strtok(data.x.imfile, '/');
-        [~, fname] = strtok(fname, '/');
-        data.x.imfile = fullfile(imgbase, fname);
-    end
-    
-    [iclusters] = clusterInteractionTemplates(data.x, params.model);
-    [spg, maxidx, h, clusters] = infer_top(data.x, iclusters, params, pg0);
-
-    [oconf] = reestimateObjectConfidences(spg, maxidx, data.x, clusters, params);
-    nmspg = getNMSgraph(spg(maxidx), data.x, clusters, oconf);
-    
-    show2DGraph(nmspg, data.x, clusters, 1);
-    show3DGraph(nmspg, data.x, clusters, 2); 
-    pause
-end
+result_summary

@@ -82,7 +82,6 @@ data.x.base_ywc3d = zeros(1, length(data.x.lconf));
 for i = 1:length(data.x.lconf)
     data.x.lloss(i) = layout_loss(data.anno.gtPolyg, data.x.lpolys(i, :));
     data.x.lerr(i) = getPixerr(data.anno.gtPolyg, data.x.lpolys(i, :));
-    data.x.lerr_ywc2d(i) = ywcGetPixErr(data.anno.gtPolyg, data.x.lpolys(i, :));
     if isempty(data.x.lpolys{i, 1}) && isempty(data.x.lpolys{i, 2})
         data.x.lerr_ywc3d(i) = NaN;
         data.x.base_ywc3d(i) = NaN;

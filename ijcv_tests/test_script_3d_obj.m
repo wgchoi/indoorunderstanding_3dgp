@@ -209,14 +209,17 @@ for i = 1:length(om)-1
     drawnow
 end
 
-save orgresult20 -v7.3
-% save ijcv_reestimate10 -v7.3
+% save orgresult20 -v7.3
+save ijcv_reestimate10 -v7.3
 % save ijcv_reestimate20 -v7.3
 % save ijcv_gt10 -v7.3
 % save ijcv_gt20 -v7.3
 
-nmsthres = 0.5;
-ovthres  = 0.5;
+option.nmsthres    = NaN;
+option.ovthres     = 0.5;
+option.same_plane  = 0;
+option.dist_metric = 2;
+option.dtthres     = 0.3;
 result_summary_3d;
 
 % for i = 1:length(datafiles)

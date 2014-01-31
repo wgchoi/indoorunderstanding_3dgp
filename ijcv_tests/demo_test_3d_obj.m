@@ -226,6 +226,11 @@ end
 %     pause
 % end
 
-ovthres = 0.5; result_summary_3d;
-
 save orgresult10
+
+option.nmsthres    = NaN;
+option.ovthres     = 0.5;
+option.same_plane  = 0;
+option.dist_metric = 2;
+option.dtthres     = 0.3;
+result_summary_3d;

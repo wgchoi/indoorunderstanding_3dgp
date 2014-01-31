@@ -76,7 +76,6 @@ data.x.lconf(errpoly) = [];
 
 data.x.lloss = zeros(1, length(data.x.lconf));
 data.x.lerr = zeros(1, length(data.x.lconf));
-data.x.lerr_ywc2d = zeros(1, length(data.x.lconf));
 data.x.lerr_ywc3d = zeros(1, length(data.x.lconf));
 data.x.base_ywc3d = zeros(1, length(data.x.lconf));
 for i = 1:length(data.x.lconf)

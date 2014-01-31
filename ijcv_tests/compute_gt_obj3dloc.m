@@ -8,12 +8,28 @@ data.anno.campar.p  = gtvp.angle_gt.pitch;
 data.anno.campar.y  = gtvp.angle_gt.yaw;
 data.anno.campar.r  = gtvp.angle_gt.roll;
 
-K_gt = gtvp.K_gt./gtvp.gt_resizefactor;
+% K_gt = gtvp.K_gt./gtvp.gt_resizefactor;
+K_gt = gtvp.K_gt;
+K_gt(1:2,:) = K_gt(1:2,:)/gtvp.gt_resizefactor;
 R_gt = gtvp.R_gt;
+
+% this should be used instead above
+data.anno.campar.K = K_gt;
+data.anno.campar.R = R_gt;
+
+% % K and R for computing gt object 3d location
+% K_bp = [data.anno.campar.f                  0 data.x.imsz(2)/2; ...
+%                          0 data.anno.campar.f data.x.imsz(1)/2; ...
+%                          0                  0                1];
+% % R_bp =[1 0 0;0 1 0;0 0 1];
+% 
+% data.anno.campar.K_bp = K_bp;
+% % data.anno.campar.R_bp = R_bp;
 
 dets = convert2dets(data.anno);
 
 [hobjs, invalid_idx] = generate_object_hypotheses(data.x.imfile, K_gt, R_gt, data.anno.campar.y, objmodels(), dets);
+% [hobjs, invalid_idx] = generate_object_hypotheses(data.x.imfile, K_bp, R_gt, data.anno.campar.y, objmodels(), dets);
 hobjs(invalid_idx) = []; dets(invalid_idx, :) = [];
 
 data.anno.hobjs = hobjs;

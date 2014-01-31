@@ -1,4 +1,4 @@
-function [ space_iu, base_wall ] = get_3d_space_iu_2( anno, Polyg, imsz, vp, K, R )
+function [ space_iu, base_wall, polytope_x ] = get_3d_space_iu_2( anno, Polyg, imsz, vp, K, R )
 % base_wall
 %   1: ground
 %   2: center wall

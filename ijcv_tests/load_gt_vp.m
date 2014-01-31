@@ -11,6 +11,14 @@ data.anno.campar.p  = gtvp.angle_gt.pitch;
 data.anno.campar.y  = gtvp.angle_gt.yaw;
 data.anno.campar.r  = gtvp.angle_gt.roll;
 
+K_gt = gtvp.K_gt;
+K_gt(1:2,:) = K_gt(1:2,:)/gtvp.gt_resizefactor;
+R_gt = gtvp.R_gt;
+
+% this should be used instead above
+data.anno.campar.K = K_gt;
+data.anno.campar.R = R_gt;
+
 % [data.anno.polytope_gnd, data.anno.volume_gnd] = getPV( ...
 %     data.anno.campar.f, data.anno.campar.p, ...
 %     data.anno.campar.y, data.anno.campar.r, ...
